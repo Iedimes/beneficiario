@@ -24,6 +24,11 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use PDF;
+
+
+
 
 class BeneficiarioController extends Controller
 {
@@ -44,7 +49,7 @@ class BeneficiarioController extends Controller
         $prmcli = Beneficiario::where('PerCod', $PerCod)->first();
 
 
-        if (!empty($prmcli)) {
+        if (!empty($prmcli)) { //Si exite beneficiario
 
             $beneficiario = Beneficiario::where('CliEsv', 1)
             ->where('CliCMor','<=', 3)
@@ -52,9 +57,9 @@ class BeneficiarioController extends Controller
 
             //$proyecto =
 
-            if (!empty($beneficiario)) {
+            if (!empty($beneficiario)) { //Si beneficiario cumple con los requisitos
 
-                $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom')->first();
+                $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom', 'PerCod')->first();
 
                 $proyecto = Proyecto::where('PylCod', $beneficiario['PylCod'])->first();
 
@@ -62,7 +67,148 @@ class BeneficiarioController extends Controller
                                         ->where('PylCod', $beneficiario['PylCod'])
                                         ->where('CliNop', $beneficiario['CliNop'])
                                         ->where('CliSec', $beneficiario['CliSec'])
-                                        ->select('CliFRes', 'CliNrs')->first();
+                                        ->select('CliFRes', 'CliNrs', 'CliNac')->first();
+
+                $cuenta = Ctacte::where('PylCod', $beneficiario['PylCod'])
+                                  ->where('ManCod', $beneficiario['ManCod'])
+                                  ->where('VivLote', $beneficiario['VivLote'])
+                                  ->where('VivBlo', $beneficiario['VivBlo'])
+                                  ->first();
+
+                $contrato =Resolucion::where('PerCod', $beneficiario['PerCod'])
+                                    ->where('PylCod', $beneficiario['PylCod'])
+                                    ->where('CliNop', $beneficiario['CliNop'])
+                                    ->where('CliSec', $beneficiario['CliSec'])
+                                    ->where('CliTMov', 1)
+                                    ->where('CliElaCon' ,'=', 'S')
+                                    ->select('CliFchCon')->first();
+
+                $programa = Programa::where('PylTip', $proyecto['PylTip'])
+                                    ->first();
+
+                return [
+                    //'prmcli' => $prmcli,
+                    'message' => 'Exito!!!',
+                    'cedula' => $bamper['PerCod'] ? trim($bamper['PerCod']) : 'No tiene beneficiario Asociado',
+                    'titular' => $bamper['PerNom'] ? trim($bamper['PerNom']) : 'No tiene beneficiario Asociado',
+                    'codigo' => trim($proyecto['PylCod']),
+                    'proyecto' => trim($proyecto['PylNom']),
+                    'resolucion' => $resolucion ? trim($resolucion['CliNrs']) : 'No tiene nro de resolución asociada',
+                    // 'resolucion' => '105',
+                    'fresolucion' => $resolucion ? date('d/m/Y', strtotime($resolucion['CliFRes'])) : 'No tiene fecha de resolución',
+                    // 'fresolucion' => '25/08/2011',
+                    'actanro' => $resolucion ? trim($resolucion['CliNac']) : 'No tiene nro acta asociado',
+                    // 'actanro' => '1200',
+                    'cuenta' => $cuenta ? trim($cuenta['VivCtaCte']) : 'No tiene dato en cuenta corriente catastral',
+                    // 'cuenta' => 'KL/07',
+                    'manzana' => $cuenta ? trim($cuenta['ManCod']) : 'No tiene dato en manzana',
+                    // 'manzana' => '10',
+                    'lote' => $cuenta ? trim($cuenta['VivLote']) : 'No tiene dato en lote',
+                    // 'lote' => '32',
+                    'contrato' => $contrato ? date('d/m/Y', strtotime($contrato['CliFchCon'])) : 'No tiene Fecha de contrato',
+                    // 'contrato' => '16/02/2010',
+                    'programa' => trim($programa['PylTipDes']),
+                    'imprimir' => true
+
+                ];
+
+            }elseif($prmcli['CliEsv'] != 1){
+
+                return [
+                    'message' => 'No cumple con los requisitos para la impresión de constancia',
+                    'error' => 'No cumple con los requisitos para la impresión de constancia'
+
+                ];
+
+
+
+            }else
+            { //Si es beneficiario y no cumple con los requisitos
+
+                 $mensaje =  $prmcli['CliCMor'] > 3 && $prmcli['CliEsv'] != 1 ? 'Cuota Vencida y Estado No Vigente'  : ($prmcli['CliCMor'] > 3 ? 'Cuota Vencida' : 'Estado No Vigente');
+                 $bamper = Bamper::where('PerCod', $PerCod)->select('PerCod','PerNom')->first();
+                 $proyecto = Proyecto::where('PylCod', $prmcli['PylCod'])->first();
+
+                $resolucion = Resolucion::where('PerCod', $prmcli['PerCod'])
+                                         ->where('PylCod', $prmcli['PylCod'])
+                                         ->where('CliNop', $prmcli['CliNop'])
+                                         ->where('CliSec', $prmcli['CliSec'])
+                                         ->select('CliFRes', 'CliNrs', 'CliNac')->first();
+
+                 $cuenta = Ctacte::where('PylCod', $prmcli['PylCod'])
+                                   ->where('ManCod', $prmcli['ManCod'])
+                                   ->where('VivLote', $prmcli['VivLote'])
+                                   ->where('VivBlo', $prmcli['VivBlo'])
+                                   ->first();
+
+                 $contrato =Resolucion::where('PerCod', $prmcli['PerCod'])
+                                     ->where('PylCod', $prmcli['PylCod'])
+                                     ->where('CliNop', $prmcli['CliNop'])
+                                     ->where('CliSec', $prmcli['CliSec'])
+                                     ->where('CliTMov', 1)
+                                     ->where('CliElaCon' ,'=', 'S')
+                                     ->select('CliFchCon')->first();
+
+                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
+                                     ->first();
+                return [
+
+
+                    'message' => $mensaje,
+                    'cedula' => $bamper['PerCod'] ? trim($bamper['PerCod']) : 'No tiene beneficiario Asociado',
+                    'titular' => $bamper['PerNom'] ? trim($bamper['PerNom']) : 'No tiene beneficiario Asociado',
+                    'codigo' => trim($proyecto['PylCod']),
+                    'proyecto' => trim($proyecto['PylNom']),
+                    'resolucion' => $resolucion ? trim($resolucion['CliNrs']) : 'No tiene nro de resolución asociada',
+                    // 'resolucion' => '105',
+                    'fresolucion' => $resolucion ? date('d/m/Y', strtotime($resolucion['CliFRes'])) : 'No tiene fecha de resolución',
+                    // 'fresolucion' => '25/08/2011',
+                    'actanro' => $resolucion ? trim($resolucion['CliNac']) : 'No tiene nro acta asociado',
+                    // 'actanro' => '1200',
+                    'cuenta' => $cuenta ? trim($cuenta['VivCtaCte']) : 'No tiene dato en cuenta corriente catastral',
+                    // 'cuenta' => 'KL/07',
+                    'manzana' => $cuenta ? trim($cuenta['ManCod']) : 'No tiene dato en manzana',
+                    // 'manzana' => '10',
+                    'lote' => $cuenta ? trim($cuenta['VivLote']) : 'No tiene dato en lote',
+                    // 'lote' => '32',
+                    'contrato' => $contrato ? date('d/m/Y', strtotime($contrato['CliFchCon'])) : 'No tiene Fecha de contrato',
+                    // 'contrato' => '16/02/2010',
+                    'programa' => trim($programa['PylTipDes']),
+                    'imprimir' => false,
+
+                ];
+            }
+
+        }else{ //Si no exite beneficiario, lanza mensaje, sin datos
+            return [
+                'message' => 'No es beneficiario',
+                'error' => 'No es beneficiario'
+
+            ];
+        }
+
+    }
+
+
+
+
+    public function createPDF($PerCod)
+    {
+
+        $beneficiario = Beneficiario::where('PerCod', $PerCod)
+        ->where('CliEsv', 1)
+        ->where('CliCMor','<=', 3)
+        ->where('PerCod', $PerCod)->first();
+
+        $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom', 'PerCod')->first();
+
+                $proyecto = Proyecto::where('PylCod', $beneficiario['PylCod'])->first();
+
+                $resolucion = Resolucion::where('PerCod', $beneficiario['PerCod'])
+                                        ->where('PylCod', $beneficiario['PylCod'])
+                                        ->where('CliNop', $beneficiario['CliNop'])
+                                        ->where('CliSec', $beneficiario['CliSec'])
+                                        ->select('CliFRes', 'CliNrs', 'CliNac')->first();
 
                 $cuenta = Ctacte::where('PylCod', $beneficiario['PylCod'])
                                   ->where('ManCod', $beneficiario['ManCod'])
@@ -78,74 +224,24 @@ class BeneficiarioController extends Controller
                                     ->select('CliFchCon')->first();
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                     ->first();
+        // $codigoQr = QrCode::size(150)->generate(env('APP_URL') . '/' . $PerCod);
+        $codigoQr = QrCode::size(150)->generate($bamper);
+        $pdf = PDF::loadView('admin.beneficiario.pdf.constancia',
+            [
+                'beneficiario' => $beneficiario,
+                'bamper' => $bamper,
+                'proyecto' => $proyecto,
+                'resolucion' => $resolucion,
+                'cuenta' => $cuenta,
+                'contrato' => $contrato,
+                'programa' => $programa,
+                'valor' => $codigoQr
 
-                return [
-                    //'prmcli' => $prmcli,
-                    'message' => 'Exito!!!',
-                    'titular' => $bamper['PerNom'] ? $bamper['PerNom'] : 'No tiene beneficiario Asociado',
-                    'proyecto' => $proyecto['PylNom'],
-                    'resolucion' => $resolucion ? $resolucion : 'No tiene resolución asociada',
-                    'cuenta' => $cuenta['VivCtaCte'],
-                    'contrato' => $contrato['CliFchCon'] ? $contrato['CliFchCon'] : 'No tiene Fecha de contrato',
-                    'programa' => $programa['PylTipDes'],
-                    'imprimir' => true
-
-                ];
-            }else {
-
-                $mensaje =  $prmcli['CliCMor'] >= 3 && $prmcli['CliEsv'] != 1 ? 'Cuota Vencida y Estado No Vigente'  : ($prmcli['CliCMor'] >= 3 ? 'Cuota Vencida' : 'Estado No Vigente');
-                $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom')->first();
-                $proyecto = Proyecto::where('PylCod', $prmcli['PylCod'])->first();
-
-                $resolucion = Resolucion::where('PerCod', $prmcli['PerCod'])
-                                        ->where('PylCod', $prmcli['PylCod'])
-                                        ->where('CliNop', $prmcli['CliNop'])
-                                        ->where('CliSec', $prmcli['CliSec'])
-                                        ->select('CliFRes', 'CliNrs')->first();
-
-                $cuenta = Ctacte::where('PylCod', $prmcli['PylCod'])
-                                  ->where('ManCod', $prmcli['ManCod'])
-                                  ->where('VivLote', $prmcli['VivLote'])
-                                  ->where('VivBlo', $prmcli['VivBlo'])
-                                  ->first();
-                $contrato =Resolucion::where('PerCod', $prmcli['PerCod'])
-                                    ->where('PylCod', $prmcli['PylCod'])
-                                    ->where('CliNop', $prmcli['CliNop'])
-                                    ->where('CliSec', $prmcli['CliSec'])
-                                    ->where('CliTMov', 1)
-                                    ->where('CliElaCon' ,'=', 'S')
-                                    ->select('CliFchCon')->first();
-                $programa = Programa::where('PylTip', $proyecto['PylTip'])
-                                    ->first();
-                return [
-                    //'prmcli' => $prmcli,
-                    'titular' => $bamper ? $bamper['PerNom'] : 'No tiene beneficiario Asociado',
-                    'message' => $mensaje,
-                    'proyecto' => $proyecto['PylNom'],
-                    'cuenta' => $cuenta['VivCtaCte'],
-                    'contrato' => $contrato ? $contrato['CliFchCon'] : 'No tiene Fecha de contrato',
-                    'resolucion' => $resolucion ? $resolucion : 'No tiene resolución asociada',
-                    'programa' => $programa['PylTipDes'],
-                    'imprimir' => false,
-
-
-                ];
-            }
-
-        }else{
-            return [
-                'message' => 'No existe Registro',
-                'error' => 'No existe Registro'
-
-            ];
-        }
+            ]
+        );
+        return $pdf->download('Constancia.pdf');
 
     }
-
-
-
-
-
 
 
 

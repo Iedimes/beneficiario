@@ -5,6 +5,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i> Beneficiarios Cartera
+
                     </div>
                     <div class="card-body" v-cloak>
                         <div class="card-block">
@@ -14,6 +15,7 @@
                                         <input class="form-control" ref="search" v-model="inputSat" @keyup.enter="getPostulante()" placeholder="Ingrese Documento del Beneficiario"  />
                                         <span class="input-group-append">
                                             <button type="button" class="btn btn-primary" @click="getPostulante()"><i class="fa fa-search"></i>&nbsp; Buscar</button>
+
                                         </span>
                                     </div>
                                 </div>
@@ -21,27 +23,33 @@
                             <div v-if="error">
                                 <div class="row">
                                     <div class="form-group col-sm-12">
-                                        <p><strong>{{ this.error }}</strong></p>
+                                        <p class="alert alert-danger"><strong>{{ this.error }}</strong></p>
                                     </div>
                                 </div>
                             </div>
                             <br>
             <div v-if="visible">
-            <h4>
-                    Beneficiario
-            </h4>
-            <br>
-            <div class="row">
-                <div class="form-group col-sm-6">
+            <h4>Beneficiario</h4><br>
+
+           <div class="row">
+
+                <div class="form-group col-sm-4">
                     <p class="card-text"><strong>Nombre:</strong> {{ this.Titular }}  </p>
                 </div>
-                <!--<div class="form-group col-sm-6">
+                <div class="form-group col-sm-4">
                     <p class="card-text"><strong>Cedula:</strong> {{ this.Cedula }}  </p>
-                </div>-->
+                </div>
+                <div class="form-group col-sm-4" v-if="this.Imprimir==false">
+                    <p class="alert alert-danger"><strong>{{ this.Message }} !!! </strong>  </p>
+                </div>
+                <div class="form-group col-sm-4" v-else-if="this.Imprimir==true">
+
+                </div>
+
             </div>
             <br>
             <h4>
-                    Información del proyecto
+                        Información del proyecto
             </h4>
             <br>
             <div class="row">
@@ -50,10 +58,10 @@
                     <p class="card-text"><strong>Programa:</strong> {{ this.Programa }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Proyecto:</strong> {{ this.Proyecto }} </p>
+                    <p class="card-text"><strong>Codigo Proyecto:</strong> {{ this.Codigo }} </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Cta. Cte.:</strong> {{ this.Cuenta }}  </p>
+                    <p class="card-text"><strong>Proyecto:</strong> {{ this.Proyecto }} </p>
                 </div>
 
             </div>
@@ -61,29 +69,79 @@
             <div class="row">
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Fecha Contrato:</strong> {{ this.Contrato  }}</p>
+                    <p class="card-text"><strong>Cta. Cte.:</strong> {{ this.Cuenta }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Nro Resolución:</strong> {{ this.Resolucion.CliNrs }}  </p>
+                    <p class="card-text"><strong>Manzana:</strong> {{ this.Manzana  }} </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Fecha Resolucion:</strong> {{ this.Resolucion.CliFRes }}  </p>
+                    <p class="card-text"><strong>Lote:</strong> {{ this.Lote }}  </p>
                 </div>
 
             </div>
-            <!-- <div class="row">
+
+            <br>
+
+            <div class="row">
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Fecha Resolución:</strong> {{ this.fecha_res | moment("DD/MM/YYYY") }}  </p>
+                    <p class="card-text"><strong>Fecha Contrato:</strong> {{ this.Contrato  }} </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Modalidad:</strong> {{ this.modalidad }}  </p>
+                    <p class="card-text"><strong>Nro Resolución:</strong> {{ this.Resolucion }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Distrito:</strong> {{ this.distrito }} </p>
+                    <p class="card-text"><strong>Fecha Resolucion:</strong> {{ this.Fresolucion }}  </p>
                 </div>
 
-            </div> -->
+            </div>
+            <br>
+            <div class="row">
+
+
+                <div class="form-group col-sm-4">
+                    <p class="card-text"><strong>Nro Acta:</strong> {{ this.Actanro }}  </p>
+                </div>
+
+                <div class="form-group col-sm-1.5" v-if="this.Contrato=='No tiene Fecha de contrato'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Cuenta=='No tiene dato en cuenta corriente catastral'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Cuenta==''">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Cuenta==''">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Manzana=='No tiene dato en manzana'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Lote=='No tiene dato en lote'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Resolucion=='No tiene nro de resolución asociada'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Fresolucion=='No tiene fecha de resolución'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Actanro=='No tiene nro acta asociado'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Message=='Cuota Vencida'">
+                        <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
+                </div>
+                <div class="form-group col-sm-1.5" v-else>
+                        <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF</a>
+                </div>
+
+
+
+
+
+            </div>
 
                 </div>
 
@@ -92,12 +150,11 @@
                 </div>
             </div>
         </div>
-
         <div class="modal" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-primary"><strong>Error!</strong></h5>
+                <h5 class="modal-title text-danger"><strong>Error!</strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -114,7 +171,6 @@
         </div>
 
     </div>
-
 </template>
 
 <script>
@@ -134,33 +190,21 @@ export default {
         return {
             isLoading: false,
             fullPage: true,
-            // arrayPostulante: [],
-            // arrayCabecera: [],
-            // arrrayHistorial: [],
-            // arrayProyecto: [],
+            Cedula: "",
             Titular: "",
             Proyecto: "",
             Programa: "",
             Cuenta: "",
             Contrato: "",
             Resolucion: "",
-
-            // sat: "",
-            // Cedula: "",
-            // ConyugeName: "",
-            // Conyugecedula: "",
-            // Certificado: "",
-            // ErrorCedula: "",
-            // Expediente: "",
-            // tipo_sol: "",
-            // NUsuNombre: "",
-            // Serie: "",
-            // Nivel: "",
-            // Fecha: "",
-            // Desc: "",
-            // error: "",
-            // total: "",
-            // Pdf: "",
+            Fresolucion: "",
+            Actanro:"",
+            Lote:"",
+            Manzana:"",
+            Codigo:"",
+            Imprimir:"",
+            Message:"",
+            error: "",
             infoBeneficiario: null,
             inputSat: "",
             visible: false,
@@ -207,32 +251,23 @@ export default {
                         console.log(respuesta);
 
                         if (!respuesta.error) {
+                            me.Cedula = respuesta.cedula;
                             me.Titular = respuesta.titular;
                             me.Programa = respuesta.programa;
                             me.Proyecto = respuesta.proyecto;
+                            me.Codigo = respuesta.codigo;
                             me.Contrato = respuesta.contrato;
                             me.Resolucion = respuesta.resolucion;
+                            me.Fresolucion = respuesta.fresolucion;
                             me.Cuenta = respuesta.cuenta;
-                            /*me.FullName = me.arrayPostulante.CerposNom;
-                            me.Cedula = me.arrayPostulante.CerPosCod;
-                            me.ConyugeName = me.arrayPostulante.CerCoNo;
-                            me.Conyugecedula = me.arrayPostulante.CerCoCI;
-                            me.Programa = respuesta.PylTipDes;
-                            me.Certificado = respuesta.certificado;
-
-                            me.Pdf = me.arrayPostulante.CerNro;
-                            me.NroCer = me.arrayPostulante.CerNro;
-                            me.resolucion = me.arrayPostulante.CerResNro;
-                            me.fecha_res = me.arrayPostulante.CerFeRe;
-                            me.proy = me.arrayPostulante.CerIdent;
-                            me.dpto = respuesta.departamento;
-                            me.distrito = respuesta.ciudad;
-                            me.modalidad = respuesta.modalidad*/
-
+                            me.Actanro = respuesta.actanro;
+                            me.Lote = respuesta.lote;
+                            me.Manzana = respuesta.manzana;
+                            me.Message = respuesta.message;
+                            me.Imprimir = respuesta.imprimir;
                             me.visible = true;
                             me.error = "";
-                            //console.log(me.arrayBeneficiario);
-                            //me.isLoading = false;
+
                         } else {
                             console.log('vacio');
                             me.visible = false;
@@ -249,18 +284,25 @@ export default {
         },
         clearData() {
             let me = this;
-            me.arrayBeneficiario = [];
-            me.FullName = "";
+
             me.Cedula = "";
-            me.ConyugeName = "";
-            me.Conyugecedula = "";
+            me.Titular = "";
             me.Programa = "";
-            me.Certificado = "";
-            me.Pdf = "";
+            me.Proyecto = "";
+            me.Codigo = "";
+            me.Contrato = "";
+            me.Resolucion = "";
+            me.Fresolucion = "";
+            me.Cuenta = "";
+            me.Actanro = "";
+            me.Lote = "";
+            me.Manzana = "";
+            me.Imprimir = "";
+            me.Message = "";
         },
         doAjax() {
             this.isLoading = true;
-            // simulate AJAX
+
             setTimeout(() => {
                 this.isLoading = false;
             }, 5000);
@@ -270,7 +312,7 @@ export default {
         }
     },
     mounted() {
-        //console.log('Component mounted.')
+
         this.$refs.search.focus();
     }
 };

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('brackets/admin-auth::admin.auth.login');
 });
 
 
@@ -56,6 +56,7 @@ Route::middleware(['auth:' . config('admin-auth.defaults.guard'), 'admin'])->gro
             Route::post('/bulk-destroy',                                'BeneficiarioController@bulkDestroy')->name('bulk-destroy');
             Route::post('/{beneficiario}',                              'BeneficiarioController@update')->name('update');
             Route::delete('/{beneficiario}',                            'BeneficiarioController@destroy')->name('destroy');
+            Route::get('{PerCod}/constanciapdf',                        'BeneficiarioController@createPDF');
         });
     });
 });

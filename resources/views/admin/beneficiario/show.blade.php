@@ -4,6 +4,7 @@
 
 @section('body')
 
+
 <beneficiario />
 
 @endsection
