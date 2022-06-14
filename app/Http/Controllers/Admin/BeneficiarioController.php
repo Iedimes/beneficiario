@@ -200,7 +200,7 @@ class BeneficiarioController extends Controller
         ->where('CliCMor','<=', 3)
         ->where('PerCod', $PerCod)->first();
 
-        $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom', 'PerCod')->first();
+        $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom', 'PerNomPri','PerNomSeg', 'PerApePri', 'PerApeSeg', 'PerApeCas', 'PerCod')->first();
 
                 $proyecto = Proyecto::where('PylCod', $beneficiario['PylCod'])->first();
 
@@ -230,6 +230,7 @@ class BeneficiarioController extends Controller
             [
                 'beneficiario' => $beneficiario,
                 'bamper' => $bamper,
+                'cas' => trim($bamper->PerApeCas),
                 'proyecto' => $proyecto,
                 'resolucion' => $resolucion,
                 'cuenta' => $cuenta,

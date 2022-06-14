@@ -4,21 +4,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {{-- <style>
-        td {
-        font-family: Arial, Helvetica, sans-serif; font-size:12px;
-        width: auto;
-        }
-
-        table{
-        border: grey 0.5px solid;
-        width: 100%;
+    <style>
+        hr {
+            border-top: 0.5px solid rgb(182, 180, 180);
         }
 
 
 
-    </style> --}}
-    <img width="650" height="80" src="https://www.muvh.gov.py/sitio/wp-content/uploads/2022/05/LOGO.jpg">
+
+
+
+    </style>
+    {{-- <img width="650" height="80" src="https://www.muvh.gov.py/sitio/wp-content/uploads/2022/05/LOGO.jpg"> --}}
+    <center><img width="900" height="130" src="C:\Users\osemidei\Documents\beneficiario\storage\images\muvh.jpg"></center>
 
 {{-- <style>
     header {

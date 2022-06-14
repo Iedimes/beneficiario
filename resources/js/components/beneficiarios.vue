@@ -27,17 +27,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
-            <div v-if="visible">
-            <h4>Beneficiario</h4><br>
 
+            <div v-if="visible">
+            <hr>
+            <h2 style="color: #4273FA; font-weight: bolder;">Beneficiario</h2><hr><br>
            <div class="row">
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Nombre:</strong> {{ this.Titular }}  </p>
+                    <p class="card-text"><strong>NOMBRE:</strong> {{ this.Titular }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Cedula:</strong> {{ this.Cedula }}  </p>
+                    <p class="card-text"><strong>CEDULA:</strong> {{ this.Cedula }}  </p>
                 </div>
                 <div class="form-group col-sm-4" v-if="this.Imprimir==false">
                     <p class="alert alert-danger"><strong>{{ this.Message }} !!! </strong>  </p>
@@ -47,21 +47,19 @@
                 </div>
 
             </div>
-            <br>
-            <h4>
-                        Información del proyecto
-            </h4>
-            <br>
+            <hr>
+            <h2 style="color: #4273FA; font-weight: bolder;">Información del proyecto</h2>
+            <hr>
             <div class="row">
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Programa:</strong> {{ this.Programa }}  </p>
+                    <p class="card-text"><strong>PROGRAMA:</strong> {{ this.Programa }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Codigo Proyecto:</strong> {{ this.Codigo }} </p>
+                    <p class="card-text"><strong>CODIGO PROYECTO:</strong> {{ this.Codigo }} </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Proyecto:</strong> {{ this.Proyecto }} </p>
+                    <p class="card-text"><strong>PROYECTO:</strong> {{ this.Proyecto }} </p>
                 </div>
 
             </div>
@@ -69,13 +67,13 @@
             <div class="row">
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Cta. Cte.:</strong> {{ this.Cuenta }}  </p>
+                    <p class="card-text"><strong>CTA. CTE.:</strong> {{ this.Cuenta }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Manzana:</strong> {{ this.Manzana  }} </p>
+                    <p class="card-text"><strong>MANZANA:</strong> {{ this.Manzana  }} </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Lote:</strong> {{ this.Lote }}  </p>
+                    <p class="card-text"><strong>LOTE:</strong> {{ this.Lote }}  </p>
                 </div>
 
             </div>
@@ -85,13 +83,13 @@
             <div class="row">
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Fecha Contrato:</strong> {{ this.Contrato  }} </p>
+                    <p class="card-text"><strong>FECHA CONTRATO:</strong> {{ this.Contrato  }} </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Nro Resolución:</strong> {{ this.Resolucion }}  </p>
+                    <p class="card-text"><strong>NRO RESOLUCION:</strong> {{ this.Resolucion }}  </p>
                 </div>
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Fecha Resolucion:</strong> {{ this.Fresolucion }}  </p>
+                    <p class="card-text"><strong>FECHA RESOLUCION:</strong> {{ this.Fresolucion }}  </p>
                 </div>
 
             </div>
@@ -100,7 +98,7 @@
 
 
                 <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>Nro Acta:</strong> {{ this.Actanro }}  </p>
+                    <p class="card-text"><strong>NRO ACTA:</strong> {{ this.Actanro }}  </p>
                 </div>
 
                 <div class="form-group col-sm-1.5" v-if="this.Contrato=='No tiene Fecha de contrato'">
@@ -134,12 +132,8 @@
                         <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
                 </div>
                 <div class="form-group col-sm-1.5" v-else>
-                        <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF</a>
+                        &nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-primary pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;<b>GENERAR PDF</b></a>
                 </div>
-
-
-
-
 
             </div>
 
@@ -154,7 +148,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-danger"><strong>Error!</strong></h5>
+                <h5 class="modal-title text-primary"><strong>Error!</strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>

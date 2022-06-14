@@ -15,7 +15,7 @@
           <img src="{{url('img/logofull.jpg')}}" class="img-fluid mx-auto d-block" alt="Image"/>
         @if (isset($task))
         <div class="card">
-        <h5 class="card-header text-center">CONSTANCIA DE PRECALIFICACION AL SUBSIDIO</h5>
+        <h5 class="card-header text-center">CONSTANCIA BENEFICIARIO</h5>
             <div class="card-body">
                 <div class="card-body">
                     <h5 class="card-title text-center">BENEFICIARIO: {{ $task->name }} {{ $task->last_name }}</h5>
@@ -30,7 +30,7 @@
                     <li class="list-group-item">FECHA EMISIÓN: {{ date('d/m/Y', strtotime($task->emitido->created_at))  }}</li>
                 </ul>
                 <div class="card-body">
-                    <h5 class="card-title text-center">VALIDO 60 DIAS</h5>
+                    <h5 class="card-title text-center">VALIDO 90 DIAS</h5>
                 </div>
                 <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
 
