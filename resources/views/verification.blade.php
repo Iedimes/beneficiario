@@ -13,21 +13,27 @@
   <body>
       <div class="container">
           <img src="{{url('img/logofull.jpg')}}" class="img-fluid mx-auto d-block" alt="Image"/>
-        @if (isset($task))
+        @if (isset($beneficiario))
         <div class="card">
         <h5 class="card-header text-center">CONSTANCIA BENEFICIARIO</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <h5 class="card-title text-center">BENEFICIARIO: {{ $task->name }} {{ $task->last_name }}</h5>
+                    <h5 class="card-title text-center">BENEFICIARIO: {{ $bamper ? $bamper->PerNomPri : 'sin dato' }} {{ $bamper ? $bamper->PerNomSeg : 'sin dato' }} {{ $bamper ? $bamper->PerApePri : 'sin dato' }} {{ $bamper ? $bamper->PerApeSeg : 'sin dato' }} @if (empty($cas))
+                        {{ $bamper ? $bamper->PerApeCas : 'sin dato' }}@else DE {{ $bamper ? $bamper->PerApeCas : 'sin dato' }}@endif
+                    </h5>
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item">DOCUMENTO: {{ number_format((int)$task->government_id,0,".",".") }}</li>
-                    <li class="list-group-item">MONTO: {{ number_format((int)(($task->amount * $task->category->percentage) / 100),0,".",".")  }}</li>
-                    <li class="list-group-item">FINCA: {{ $task->farm }}</li>
-                    <li class="list-group-item">CTA CTE CTRAL: {{ $task->account }}</li>
-                    <li class="list-group-item">CIUDAD: {{ strtoupper($task->city->CiuNom) }}</li>
-                    <li class="list-group-item">DEPARTAMENTO: {{ $task->state->DptoNom }}</li>
-                    <li class="list-group-item">FECHA EMISIÓN: {{ date('d/m/Y', strtotime($task->emitido->created_at))  }}</li>
+                    <li class="list-group-item">CEDULA: {{ $beneficiario ? $beneficiario->PerCod: 'sin dato' }}</li>
+                    <li class="list-group-item">PROYECTO: {{ $proyecto ? trim($proyecto->PylNom): 'sin dato' }}</li>
+                    <li class="list-group-item">MANZANA: {{ $cuenta ? trim($cuenta->ManCod): 'sin dato' }}</li>
+                    <li class="list-group-item">LOTE: {{ $cuenta ? trim($cuenta->VivLote): 'sin dato' }}</li>
+                    <li class="list-group-item">CTA. CTE CTRAL: {{ $cuenta ? trim($cuenta->VivCtaCte): 'sin dato' }}</li>
+                    <li class="list-group-item">RESOLUCION: {{$resolucion ? trim($resolucion->CliNrs): 'sin dato' }}</li>
+                    <li class="list-group-item">FECHA RESOLUCION: {{ date('d/m/Y', strtotime($resolucion ? trim($resolucion->CliFRes): 'sin dato'))}}</li>
+                    <li class="list-group-item">ACTA: {{ $resolucion ? trim($resolucion->CliNac): 'sin dato' }}</li>
+                    <li class="list-group-item">FECHA CONTRATO: {{ date('d/m/Y', strtotime($contrato ? trim($contrato->CliFchCon): 'sin dato'))}}</li>
+
+
                 </ul>
                 <div class="card-body">
                     <h5 class="card-title text-center">VALIDO 90 DIAS</h5>
