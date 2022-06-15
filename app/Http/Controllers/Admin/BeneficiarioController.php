@@ -224,8 +224,8 @@ class BeneficiarioController extends Controller
                                     ->select('CliFchCon')->first();
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                     ->first();
-        // $codigoQr = QrCode::size(150)->generate(env('APP_URL') . '/' . $PerCod);
-        $codigoQr = QrCode::size(150)->generate($bamper);
+        $codigoQr = QrCode::size(150)->generate(env('APP_URL') . '/' . $PerCod);
+        //$codigoQr = QrCode::size(150)->generate($bamper);
         $pdf = PDF::loadView('admin.beneficiario.pdf.constancia',
             [
                 'beneficiario' => $beneficiario,
