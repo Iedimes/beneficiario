@@ -15,8 +15,8 @@
 
 
     </style>
-    {{-- <img width="650" height="80" src="https://www.muvh.gov.py/sitio/wp-content/uploads/2022/05/LOGO.jpg"> --}}
-    <center><img width="900" height="130" src="C:\Users\osemidei\Documents\beneficiario\storage\images\muvh.jpg"></center>
+    <center><img width="900" height="130" src="https://www.muvh.gov.py/sitio/wp-content/uploads/2022/06/muvh-1.jpg"></center>
+    {{-- <img width="900" height="130" src="C:\Users\osemidei\Documents\beneficiario\storage\app\public\muvh.jpg"></center> --}}
 
 {{-- <style>
     header {
