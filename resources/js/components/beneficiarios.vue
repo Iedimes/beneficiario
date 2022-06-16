@@ -101,7 +101,7 @@
                     <p class="card-text"><strong>NRO ACTA:</strong> {{ this.Actanro }}  </p>
                 </div>
 
-                <div class="form-group col-sm-1.5" v-if="this.Contrato=='No tiene Fecha de contrato'">
+                <div class="form-group col-sm-1.5 alert alert-danger" v-if="this.Contrato=='No tiene Fecha de contrato'">
                         <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
                 </div>
                 <div class="form-group col-sm-1.5" v-else-if="this.Cuenta=='No tiene dato en cuenta corriente catastral'">

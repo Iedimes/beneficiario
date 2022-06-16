@@ -189,6 +189,49 @@ class BeneficiarioController extends Controller
 
     }
 
+    public function verificacion($cedula)
+    {
+
+        //return $cedula;
+        /*$task = Task::where('certificate_pin', $key)
+            //->select('name', 'last_name', 'government_id', 'farm', 'account', 'amount', 'state_id', 'city_id', 'created_at')
+            ->first();*/
+        $bamper = Bamper::where('PerCod', $cedula)->first();
+        $cas = Bamper::where('PerCod', $cedula)->select('PerApeCas')->first();
+        $casada = $cas ? trim($cas['PerApeCas']) : 'No tiene apellido de casada/o';
+        $beneficiario = Beneficiario::where('CliEsv', 1)
+            ->where('CliCMor','<=', 3)
+            ->where('PerCod', $cedula)->first();
+        $proyecto = Proyecto::where('PylCod', $beneficiario['PylCod'])->first();
+
+
+                $resolucion = Resolucion::where('PerCod', $beneficiario['PerCod'])
+                                        ->where('PylCod', $beneficiario['PylCod'])
+                                        ->where('CliNop', $beneficiario['CliNop'])
+                                        ->where('CliSec', $beneficiario['CliSec'])
+                                        ->select('CliFRes', 'CliNrs', 'CliNac')->first();
+
+                $cuenta = Ctacte::where('PylCod', $beneficiario['PylCod'])
+                                  ->where('ManCod', $beneficiario['ManCod'])
+                                  ->where('VivLote', $beneficiario['VivLote'])
+                                  ->where('VivBlo', $beneficiario['VivBlo'])
+                                  ->first();
+
+                $contrato =Resolucion::where('PerCod', $beneficiario['PerCod'])
+                                    ->where('PylCod', $beneficiario['PylCod'])
+                                    ->where('CliNop', $beneficiario['CliNop'])
+                                    ->where('CliSec', $beneficiario['CliSec'])
+                                    ->where('CliTMov', 1)
+                                    ->where('CliElaCon' ,'=', 'S')
+                                    ->select('CliFchCon')->first();
+
+                $programa = Programa::where('PylTip', $proyecto['PylTip'])
+                                    ->first();
+
+        //return $bamper;
+        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa'));
+    }
+
 
 
 

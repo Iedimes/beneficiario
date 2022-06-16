@@ -13,17 +13,17 @@
   <body>
       <div class="container">
           <img src="{{url('img/logofull.jpg')}}" class="img-fluid mx-auto d-block" alt="Image"/>
-        @if (isset($beneficiario))
+        @if (isset($bamper))
         <div class="card">
         <h5 class="card-header text-center">CONSTANCIA BENEFICIARIO</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <h5 class="card-title text-center">BENEFICIARIO: {{ $bamper ? $bamper->PerNomPri : 'sin dato' }} {{ $bamper ? $bamper->PerNomSeg : 'sin dato' }} {{ $bamper ? $bamper->PerApePri : 'sin dato' }} {{ $bamper ? $bamper->PerApeSeg : 'sin dato' }} @if (empty($cas))
+                    <h5 class="card-title text-center">BENEFICIARIO: {{  $bamper->PerNomPri  }} {{ $bamper ? $bamper->PerNomSeg : 'sin dato' }} {{ $bamper ? $bamper->PerApePri : 'sin dato' }} {{ $bamper ? $bamper->PerApeSeg : 'sin dato' }} @if (empty($casada))
                         {{ $bamper ? $bamper->PerApeCas : 'sin dato' }}@else DE {{ $bamper ? $bamper->PerApeCas : 'sin dato' }}@endif
                     </h5>
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item">CEDULA: {{ $beneficiario ? $beneficiario->PerCod: 'sin dato' }}</li>
+                    <li class="list-group-item">CEDULA: {{ $bamper ? $bamper->PerCod: 'sin dato' }}</li>
                     <li class="list-group-item">PROYECTO: {{ $proyecto ? trim($proyecto->PylNom): 'sin dato' }}</li>
                     <li class="list-group-item">MANZANA: {{ $cuenta ? trim($cuenta->ManCod): 'sin dato' }}</li>
                     <li class="list-group-item">LOTE: {{ $cuenta ? trim($cuenta->VivLote): 'sin dato' }}</li>
