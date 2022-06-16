@@ -35,9 +35,9 @@
 
 
                 </ul>
-                <div class="card-body">
+                {{-- <div class="card-body">
                     <h5 class="card-title text-center">VALIDO 90 DIAS</h5>
-                </div>
+                </div> --}}
                 <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
 
             </div>
