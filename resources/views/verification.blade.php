@@ -18,8 +18,12 @@
         <h5 class="card-header text-center">CONSTANCIA BENEFICIARIO</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <h5 class="card-title text-center">BENEFICIARIO: {{  $bamper->PerNomPri  }} {{ $bamper->PerNomSeg }} {{ $bamper->PerApePri }} {{ $bamper->PerApeSeg }} @if (empty($casada))
-                        {{ $bamper->PerApeCas }}@else DE {{ $bamper->PerApeCas }}@endif
+                    <h5 class="card-title text-center">BENEFICIARIO: {{  $bamper->PerNomPri  }} {{ $bamper->PerNomSeg }} {{ $bamper->PerApePri }} {{ $bamper->PerApeSeg }}
+                        @if (empty($casada))
+                            {{ $bamper->PerApeCas }}
+                        @else
+                            DE {{ $bamper->PerApeCas }}
+                        @endif
                     </h5>
                 </div>
                 <ul class="list-group list-group-flush text-center">
@@ -30,7 +34,7 @@
                     <li class="list-group-item">CTA. CTE CTRAL: {{ trim($cuenta->VivCtaCte) }}</li>
                     <li class="list-group-item">RESOLUCION: {{ trim($resolucion->CliNrs) }}</li>
                     <li class="list-group-item">FECHA RESOLUCION: {{ date('d/m/Y', strtotime(trim($resolucion->CliFRes)))}}</li>
-                    <li class="list-group-item">ACTA: {{ trim($resolucion->CliNac) }}</li>
+                    <li class="list-group-item">ACTA: {{ $resolucion->CliNac ? trim($resolucion->CliNac): '' }}</li>
                     <li class="list-group-item">FECHA CONTRATO: {{ date('d/m/Y', strtotime(trim($contrato->CliFchCon)))}}</li>
 
 
