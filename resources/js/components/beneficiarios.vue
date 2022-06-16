@@ -66,8 +66,14 @@
             <br>
             <div class="row">
 
-                <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>CTA. CTE.:</strong> {{ this.Cuenta }}  </p>
+                <div class="form-group col-sm-4" v-if="this.Cuenta==''">
+                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong><b  style="color:red;"> No tiene cta. cte. ctral</b></p>
+                </div>
+                <div class="form-group col-sm-1.5" v-else-if="this.Cuenta=='No tiene dato en cuenta corriente catastral'">
+                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong><b  style="color:red;"> No tiene cta. cte. ctral</b></p>
+                </div>
+                <div class="form-group col-sm-4" v-else>
+                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong>  {{ this.Cuenta  }} </p>
                 </div>
                 <div class="form-group col-sm-4">
                     <p class="card-text"><strong>MANZANA:</strong> {{ this.Manzana  }} </p>
@@ -82,13 +88,22 @@
 
             <div class="row">
 
-                <div class="form-group col-sm-4">
-                    <p class="card-text"><strong>FECHA CONTRATO:</strong> {{ this.Contrato  }} </p>
+                <div class="form-group col-sm-4" v-if="this.Contrato=='No tiene Fecha de contrato'">
+                    <p class="card-text"><strong>FECHA CONTRATO:</strong><b  style="color:red;"> No tiene Fecha de contrato</b></p>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-4" v-else>
+                    <p class="card-text"><strong>FECHA CONTRATO:</strong>  {{ this.Contrato  }} </p>
+                </div>
+                <div class="form-group col-sm-4" v-if="this.Resolucion=='No tiene nro de resolución asociada'">
+                    <p class="card-text"><strong>NRO RESOLUCION:</strong><b  style="color:red;"> No tiene nro de resolución asociada </b></p>
+                </div>
+                <div class="form-group col-sm-4" v-else>
                     <p class="card-text"><strong>NRO RESOLUCION:</strong> {{ this.Resolucion }}  </p>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-4" v-if="this.Fresolucion=='No tiene fecha de resolución'">
+                    <p class="card-text"><strong>FECHA RESOLUCION:</strong> <b  style="color:red;">No tiene fecha de resolución</b></p>
+                </div>
+                <div class="form-group col-sm-4" v-else>
                     <p class="card-text"><strong>FECHA RESOLUCION:</strong> {{ this.Fresolucion }}  </p>
                 </div>
 
@@ -97,11 +112,15 @@
             <div class="row">
 
 
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-4" v-if="this.Actanro=='No tiene nro acta asociado'">
+                    <p class="card-text"><strong>NRO ACTA:</strong><b  style="color:red;"> No tiene nro acta asociado</b></p>
+                </div>
+
+                <div class="form-group col-sm-4" v-else>
                     <p class="card-text"><strong>NRO ACTA:</strong> {{ this.Actanro }}  </p>
                 </div>
 
-                <div class="form-group col-sm-1.5 alert alert-danger" v-if="this.Contrato=='No tiene Fecha de contrato'">
+                <div class="form-group col-sm-1.5" v-if="this.Contrato=='No tiene Fecha de contrato'">
                         <!-- <a class="btn btn-sm btn-danger pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;GENERAR PDF Contrato</a> -->
                 </div>
                 <div class="form-group col-sm-1.5" v-else-if="this.Cuenta=='No tiene dato en cuenta corriente catastral'">

@@ -135,7 +135,7 @@ class BeneficiarioController extends Controller
                                          ->where('CliSec', $prmcli['CliSec'])
                                          ->select('CliFRes', 'CliNrs', 'CliNac')->first();
 
-                 $cuenta = Ctacte::where('PylCod', $prmcli['PylCod'])
+                $cuenta = Ctacte::where('PylCod', $prmcli['PylCod'])
                                    ->where('ManCod', $prmcli['ManCod'])
                                    ->where('VivLote', $prmcli['VivLote'])
                                    ->where('VivBlo', $prmcli['VivBlo'])
@@ -166,7 +166,7 @@ class BeneficiarioController extends Controller
                     'actanro' => $resolucion ? trim($resolucion['CliNac']) : 'No tiene nro acta asociado',
                     // 'actanro' => '1200',
                     'cuenta' => $cuenta ? trim($cuenta['VivCtaCte']) : 'No tiene dato en cuenta corriente catastral',
-                    // 'cuenta' => 'KL/07',
+                    //'cuenta' => 'No tiene dato en cuenta corriente catastral',
                     'manzana' => $cuenta ? trim($cuenta['ManCod']) : 'No tiene dato en manzana',
                     // 'manzana' => '10',
                     'lote' => $cuenta ? trim($cuenta['VivLote']) : 'No tiene dato en lote',
