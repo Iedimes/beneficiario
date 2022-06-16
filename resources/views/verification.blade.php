@@ -18,20 +18,20 @@
         <h5 class="card-header text-center">CONSTANCIA BENEFICIARIO</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <h5 class="card-title text-center">BENEFICIARIO: {{  $bamper->PerNomPri  }} {{ $bamper ? $bamper->PerNomSeg : 'sin dato' }} {{ $bamper ? $bamper->PerApePri : 'sin dato' }} {{ $bamper ? $bamper->PerApeSeg : 'sin dato' }} @if (empty($casada))
-                        {{ $bamper ? $bamper->PerApeCas : 'sin dato' }}@else DE {{ $bamper ? $bamper->PerApeCas : 'sin dato' }}@endif
+                    <h5 class="card-title text-center">BENEFICIARIO: {{  $bamper->PerNomPri  }} {{ $bamper->PerNomSeg }} {{ $bamper->PerApePri }} {{ $bamper->PerApeSeg }} @if (empty($casada))
+                        {{ $bamper->PerApeCas }}@else DE {{ $bamper->PerApeCas }}@endif
                     </h5>
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item">CEDULA: {{ $bamper ? $bamper->PerCod: 'sin dato' }}</li>
-                    <li class="list-group-item">PROYECTO: {{ $proyecto ? trim($proyecto->PylNom): 'sin dato' }}</li>
-                    <li class="list-group-item">MANZANA: {{ $cuenta ? trim($cuenta->ManCod): 'sin dato' }}</li>
-                    <li class="list-group-item">LOTE: {{ $cuenta ? trim($cuenta->VivLote): 'sin dato' }}</li>
-                    <li class="list-group-item">CTA. CTE CTRAL: {{ $cuenta ? trim($cuenta->VivCtaCte): 'sin dato' }}</li>
-                    <li class="list-group-item">RESOLUCION: {{$resolucion ? trim($resolucion->CliNrs): 'sin dato' }}</li>
-                    <li class="list-group-item">FECHA RESOLUCION: {{ date('d/m/Y', strtotime($resolucion ? trim($resolucion->CliFRes): 'sin dato'))}}</li>
-                    <li class="list-group-item">ACTA: {{ $resolucion ? trim($resolucion->CliNac): 'sin dato' }}</li>
-                    <li class="list-group-item">FECHA CONTRATO: {{ date('d/m/Y', strtotime($contrato ? trim($contrato->CliFchCon): 'sin dato'))}}</li>
+                    <li class="list-group-item">CEDULA: {{ $bamper->PerCod }}</li>
+                    <li class="list-group-item">PROYECTO: {{ trim($proyecto->PylNom) }}</li>
+                    <li class="list-group-item">MANZANA: {{ trim($cuenta->ManCod) }}</li>
+                    <li class="list-group-item">LOTE: {{ trim($cuenta->VivLote) }}</li>
+                    <li class="list-group-item">CTA. CTE CTRAL: {{ trim($cuenta->VivCtaCte) }}</li>
+                    <li class="list-group-item">RESOLUCION: {{ trim($resolucion->CliNrs) }}</li>
+                    <li class="list-group-item">FECHA RESOLUCION: {{ date('d/m/Y', strtotime(trim($resolucion->CliFRes)))}}</li>
+                    <li class="list-group-item">ACTA: {{ trim($resolucion->CliNac) }}</li>
+                    <li class="list-group-item">FECHA CONTRATO: {{ date('d/m/Y', strtotime(trim($contrato->CliFchCon)))}}</li>
 
 
                 </ul>
