@@ -40,7 +40,7 @@
                     <p class="card-text"><strong>CEDULA:</strong> {{ this.Cedula }}  </p>
                 </div>
                 <div class="form-group col-sm-4" v-if="this.Imprimir==false">
-                    <p class="alert alert-danger"><strong>{{ this.Message }} !!! </strong>  </p>
+                    <p><strong>{{ this.Message }} !!! </strong>  </p>
                 </div>
                 <div class="form-group col-sm-4" v-else-if="this.Imprimir==true">
 

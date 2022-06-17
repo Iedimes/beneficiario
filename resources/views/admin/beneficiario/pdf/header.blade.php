@@ -8,7 +8,7 @@
  DE {{ $bamper->PerApeCas }}
 @endif</b> con <b>C.I. N°. {{ $beneficiario->PerCod }} </b> es adjudicatario/a de la
  vivienda individualizada como manzana <b>{{ trim($cuenta->ManCod) }}</b>, <b>lote {{ trim($cuenta->VivLote) }}</b> del proyecto <b> {{ trim($proyecto->PylNom) }}</b>, con
- <b>Cuenta Corriente Catastral N°. {{ trim($cuenta->VivCtaCte) }}</b>, de conformidad a la <b>Resolución N°. {{ trim($resolucion->CliNrs) }}</b>, <b>Acta {{ $resolucion->CliNac ? trim($resolucion->CliNac): '' }}</b> de fecha <b>{{ date('d/m/Y', strtotime( trim($resolucion->CliFRes)))}} </b>,
+ <b>Cuenta Corriente Catastral N°. {{ trim($cuenta->VivCtaCte) }}</b>, de conformidad a la <b>Resolución N°. {{ $resolucion->CliNrs ? trim($resolucion->CliNrs):'' }}</b>, <b>Acta {{ $resolucion->CliNac ? trim($resolucion->CliNac): '' }}</b> de fecha <b>{{ date('d/m/Y', strtotime( trim($resolucion->CliFRes)))}} </b>,
   contrato de compra venta de fecha <b>{{ date('d/m/Y', strtotime(trim($contrato->CliFchCon)))}}</b> y Estado de cuenta de la Dirección de Administración y Recuperación de Cartera de fecha <b>{{ date('d/m/Y') }}</b></p>
 
 <p style="text-align: justify;">Esta constancia es gratuita, válida por 90 días, para su presentación exclusiva ante <strong>ANDE/ESSAP</strong></p>

@@ -52,10 +52,11 @@ class BeneficiarioController extends Controller
         if (!empty($prmcli)) { //Si exite beneficiario
 
             $beneficiario = Beneficiario::where('CliEsv', 1)
-            ->where('CliCMor','<=', 3)
-            ->where('PerCod', $PerCod)->first();
-
-            //$proyecto =
+                                        ->Where('CliEsv', 9)
+                                        ->Where('CliEsv', 13)
+                                        ->Where('CliEsv', 23)
+                                        ->where('CliCMor','<=', 3)
+                                        ->where('PerCod', $PerCod)->first();
 
             if (!empty($beneficiario)) { //Si beneficiario cumple con los requisitos
 
@@ -112,7 +113,7 @@ class BeneficiarioController extends Controller
 
                 ];
 
-            }elseif($prmcli['CliEsv'] != 1){
+            }elseif($prmcli['CliEsv'] != 1 && $prmcli['CliEsv'] != 9 && $prmcli['CliEsv'] != 13 && $prmcli['CliEsv'] != 23){
 
                 return [
                     'message' => 'No cumple con los requisitos para la impresión de constancia',
@@ -125,7 +126,9 @@ class BeneficiarioController extends Controller
             }else
             { //Si es beneficiario y no cumple con los requisitos
 
-                 $mensaje =  $prmcli['CliCMor'] > 3 && $prmcli['CliEsv'] != 1 ? 'Cuota Vencida y Estado No Vigente'  : ($prmcli['CliCMor'] > 3 ? 'Cuota Vencida' : 'Estado No Vigente');
+
+                //  $mensaje =  $prmcli['CliCMor'] > 3 && $prmcli['CliEsv'] != 1 ? 'Cuota Vencida y Estado No Vigente'  : ($prmcli['CliCMor'] > 3 ? 'Cuota Vencida' : 'Estado No Vigente');
+                 $mensaje =  $prmcli['CliCMor'] > 3 ? 'Cuota Vencida'  : ($prmcli['CliCMor'] = 0 ? '' : 'Estado Cancelado');
                  $bamper = Bamper::where('PerCod', $PerCod)->select('PerCod','PerNom')->first();
                  $proyecto = Proyecto::where('PylCod', $prmcli['PylCod'])->first();
 
@@ -239,9 +242,12 @@ class BeneficiarioController extends Controller
     {
 
         $beneficiario = Beneficiario::where('PerCod', $PerCod)
-        ->where('CliEsv', 1)
         ->where('CliCMor','<=', 3)
         ->where('PerCod', $PerCod)->first();
+        // ->orWhere('CliEsv', 9)
+        // ->orWhere('CliEsv', 13)
+        // ->orWhere('CliEsv', 23)->first();
+
 
         $bamper = Bamper::where('PerCod', $PerCod)->select('PerNom', 'PerNomPri','PerNomSeg', 'PerApePri', 'PerApeSeg', 'PerApeCas', 'PerCod')->first();
 
