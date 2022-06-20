@@ -4,7 +4,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Beneficiarios Cartera
+                        <i class="fa fa-align-justify"></i> CONSTANCIAS ANDE - ESSAP
 
                     </div>
                     <div class="card-body" v-cloak>
