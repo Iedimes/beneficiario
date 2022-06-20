@@ -33,17 +33,32 @@
             <h2 style="color: #4273FA; font-weight: bolder;">Beneficiario</h2><hr><br>
            <div class="row">
 
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>NOMBRE:</strong> {{ this.Titular }}  </p>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>CEDULA:</strong> {{ this.Cedula }}  </p>
                 </div>
-                <div class="form-group col-sm-4" v-if="this.Imprimir==false">
-                    <p><strong>{{ this.Message }} !!! </strong>  </p>
+                <div class="form-group col-sm-3" v-if="this.Estado=='1'">
+                    <p class="card-text"><strong>ESTADO:</strong> Vigente  </p>
                 </div>
-                <div class="form-group col-sm-4" v-else-if="this.Imprimir==true">
-
+                <div class="form-group col-sm-3" v-else-if="this.Estado=='9'">
+                    <p class="card-text"><strong>ESTADO:</strong> Cancelado  </p>
+                </div>
+                <div class="form-group col-sm-3" v-else-if="this.Estado=='13'">
+                    <p class="card-text"><strong>ESTADO:</strong> Transferido  </p>
+                </div>
+                <div class="form-group col-sm-3" v-else-if="this.Estado=='23'">
+                    <p class="card-text"><strong>ESTADO:</strong> Con Resolución Transferencia  </p>
+                </div>
+                <div class="form-group col-sm-3" v-else>
+                    <p class="card-text"><strong>ESTADO:</strong></p>
+                </div>
+                <div class="form-group col-sm-3" v-if="this.Imprimir==false">
+                    <p style="color:red;"><strong>{{ this.Message }} </strong>  </p>
+                </div>
+                <div class="form-group col-sm-3" v-else-if="this.Imprimir==true">
+                    <p style="color:red;"><strong>{{ this.Message }} -  </strong>  </p>
                 </div>
 
             </div>
@@ -52,72 +67,71 @@
             <hr>
             <div class="row">
 
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>PROGRAMA:</strong> {{ this.Programa }}  </p>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>CODIGO PROYECTO:</strong> {{ this.Codigo }} </p>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>PROYECTO:</strong> {{ this.Proyecto }} </p>
+                </div>
+                 <div class="form-group col-sm-3" v-if="this.Cuenta==''">
+                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong><b  style="color:red;"> No tiene cta. cte. ctral</b></p>
+                </div>
+                <div class="form-group col-sm-3" v-else-if="this.Cuenta=='No tiene dato en cuenta corriente catastral'">
+                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong><b  style="color:red;"> No tiene cta. cte. ctral</b></p>
+                </div>
+                <div class="form-group col-sm-3" v-else>
+                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong>  {{ this.Cuenta  }} </p>
                 </div>
 
             </div>
             <br>
             <div class="row">
 
-                <div class="form-group col-sm-4" v-if="this.Cuenta==''">
-                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong><b  style="color:red;"> No tiene cta. cte. ctral</b></p>
-                </div>
-                <div class="form-group col-sm-1.5" v-else-if="this.Cuenta=='No tiene dato en cuenta corriente catastral'">
-                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong><b  style="color:red;"> No tiene cta. cte. ctral</b></p>
-                </div>
-                <div class="form-group col-sm-4" v-else>
-                    <p class="card-text"><strong>CTA. CTE. CTRAL.:</strong>  {{ this.Cuenta  }} </p>
-                </div>
-                <div class="form-group col-sm-4">
+
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>MANZANA:</strong> {{ this.Manzana  }} </p>
                 </div>
-                <div class="form-group col-sm-4">
+                <div class="form-group col-sm-3">
                     <p class="card-text"><strong>LOTE:</strong> {{ this.Lote }}  </p>
                 </div>
 
-            </div>
-
-            <br>
-
-            <div class="row">
-
-                <div class="form-group col-sm-4" v-if="this.Contrato=='No tiene Fecha de contrato'">
+                <div class="form-group col-sm-3" v-if="this.Contrato=='No tiene Fecha de contrato'">
                     <p class="card-text"><strong>FECHA CONTRATO:</strong><b  style="color:red;"> No tiene Fecha de contrato</b></p>
                 </div>
-                <div class="form-group col-sm-4" v-else>
+                <div class="form-group col-sm-3" v-else>
                     <p class="card-text"><strong>FECHA CONTRATO:</strong>  {{ this.Contrato  }} </p>
                 </div>
-                <div class="form-group col-sm-4" v-if="this.Resolucion=='No tiene nro de resolución asociada'">
-                    <p class="card-text"><strong>NRO RESOLUCION:</strong><b  style="color:red;"> No tiene nro de resolución asociada </b></p>
-                </div>
-                <div class="form-group col-sm-4" v-else>
-                    <p class="card-text"><strong>NRO RESOLUCION:</strong> {{ this.Resolucion }}  </p>
-                </div>
-                <div class="form-group col-sm-4" v-if="this.Fresolucion=='No tiene fecha de resolución'">
-                    <p class="card-text"><strong>FECHA RESOLUCION:</strong> <b  style="color:red;">No tiene fecha de resolución</b></p>
-                </div>
-                <div class="form-group col-sm-4" v-else>
-                    <p class="card-text"><strong>FECHA RESOLUCION:</strong> {{ this.Fresolucion }}  </p>
-                </div>
-
-            </div>
-            <br>
-            <div class="row">
 
 
-                <div class="form-group col-sm-4" v-if="this.Actanro=='No tiene nro acta asociado'">
+                <div class="form-group col-sm-3" v-if="this.Actanro=='No tiene nro acta asociado'">
                     <p class="card-text"><strong>NRO ACTA:</strong><b  style="color:red;"> No tiene nro acta asociado</b></p>
                 </div>
 
-                <div class="form-group col-sm-4" v-else>
+                <div class="form-group col-sm-3" v-else>
                     <p class="card-text"><strong>NRO ACTA:</strong> {{ this.Actanro }}  </p>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="row">
+
+
+                <div class="form-group col-sm-3" v-if="this.Resolucion=='No tiene nro de resolución asociada'">
+                    <p class="card-text"><strong>NRO RESOLUCION:</strong><b  style="color:red;"> No tiene nro de resolución asociada </b></p>
+                </div>
+                <div class="form-group col-sm-3" v-else>
+                    <p class="card-text"><strong>NRO RESOLUCION:</strong> {{ this.Resolucion }}  </p>
+                </div>
+                <div class="form-group col-sm-3" v-if="this.Fresolucion=='No tiene fecha de resolución'">
+                    <p class="card-text"><strong>FECHA RESOLUCION:</strong> <b  style="color:red;">No tiene fecha de resolución</b></p>
+                </div>
+                <div class="form-group col-sm-3" v-else>
+                    <p class="card-text"><strong>FECHA RESOLUCION:</strong> {{ this.Fresolucion }}  </p>
                 </div>
 
                 <div class="form-group col-sm-1.5" v-if="this.Contrato=='No tiene Fecha de contrato'">
@@ -154,7 +168,9 @@
                         &nbsp;&nbsp;&nbsp;<a class="btn btn-sm btn-primary pull-right m-b-0 rounded-pill" :href="'/admin/beneficiarios/' + this.Cedula + '/constanciapdf/'"><i class="fa fa-file-pdf-o "></i>&nbsp;<b>GENERAR PDF</b></a>
                 </div>
 
+
             </div>
+            <br>
 
                 </div>
 
@@ -215,6 +231,7 @@ export default {
             Lote:"",
             Manzana:"",
             Codigo:"",
+            Estado:"",
             Imprimir:"",
             Message:"",
             error: "",
@@ -276,6 +293,7 @@ export default {
                             me.Actanro = respuesta.actanro;
                             me.Lote = respuesta.lote;
                             me.Manzana = respuesta.manzana;
+                            me.Estado = respuesta.estado;
                             me.Message = respuesta.message;
                             me.Imprimir = respuesta.imprimir;
                             me.visible = true;
@@ -310,6 +328,7 @@ export default {
             me.Actanro = "";
             me.Lote = "";
             me.Manzana = "";
+            me.Estado = "";
             me.Imprimir = "";
             me.Message = "";
         },

@@ -109,7 +109,9 @@ class BeneficiarioController extends Controller
                     'contrato' => $contrato ? date('d/m/Y', strtotime($contrato['CliFchCon'])) : 'No tiene Fecha de contrato',
                     // 'contrato' => '16/02/2010',
                     'programa' => trim($programa['PylTipDes']),
+                    'estado' => $prmcli ? trim($prmcli['CliEsv']) : 'No tiene estado',
                     'imprimir' => true
+
 
                 ];
 
@@ -128,7 +130,7 @@ class BeneficiarioController extends Controller
 
 
                 //  $mensaje =  $prmcli['CliCMor'] > 3 && $prmcli['CliEsv'] != 1 ? 'Cuota Vencida y Estado No Vigente'  : ($prmcli['CliCMor'] > 3 ? 'Cuota Vencida' : 'Estado No Vigente');
-                 $mensaje =  $prmcli['CliCMor'] > 3 ? 'Cuota Vencida'  : ($prmcli['CliCMor'] = 0 ? '' : 'Estado Cancelado');
+                 $mensaje =  $prmcli['CliCMor'] > 3 ? 'Cuota Vencida'  : ($prmcli['CliCMor'] = 0 ? : '');
                  $bamper = Bamper::where('PerCod', $PerCod)->select('PerCod','PerNom')->first();
                  $proyecto = Proyecto::where('PylCod', $prmcli['PylCod'])->first();
 
@@ -178,6 +180,7 @@ class BeneficiarioController extends Controller
                     // 'contrato' => '16/02/2010',
                     'programa' => trim($programa['PylTipDes']),
                     'imprimir' => false,
+                    'estado' => $prmcli ? trim($prmcli['CliEsv']) : 'No tiene estado',
 
                 ];
             }
