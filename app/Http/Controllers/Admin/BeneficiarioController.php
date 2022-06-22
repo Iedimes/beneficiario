@@ -205,9 +205,7 @@ class BeneficiarioController extends Controller
         $bamper = Bamper::where('PerCod', $cedula)->first();
         $cas = Bamper::where('PerCod', $cedula)->select('PerApeCas')->first();
         $casada = $cas ? trim($cas['PerApeCas']) : 'No tiene apellido de casada/o';
-        $beneficiario = Beneficiario::where('CliEsv', 1)
-            ->where('CliCMor','<=', 3)
-            ->where('PerCod', $cedula)->first();
+        $beneficiario = Beneficiario::where('PerCod', $cedula)->first();
         $proyecto = Proyecto::where('PylCod', $beneficiario['PylCod'])->first();
 
 
