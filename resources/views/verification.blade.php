@@ -36,13 +36,15 @@
                     <li class="list-group-item">FECHA RESOLUCION: {{ date('d/m/Y', strtotime(trim($resolucion->CliFRes)))}}</li>
                     <li class="list-group-item">ACTA: {{ $resolucion->CliNac ? trim($resolucion->CliNac): '' }}</li>
                     <li class="list-group-item">FECHA CONTRATO: {{ date('d/m/Y', strtotime(trim($contrato->CliFchCon)))}}</li>
+                    <li class="list-group-item">FECHA IMPRESION: {{ date('d/m/Y', strtotime(trim($impresion->fecha_impresion)))}}</li>
+
 
 
                 </ul>
-                {{-- <div class="card-body">
+                <div class="card-body">
                     <h5 class="card-title text-center">VALIDO 90 DIAS</h5>
-                </div> --}}
-                <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                </div>
+                {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
 
             </div>
         </div>

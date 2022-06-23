@@ -14,6 +14,7 @@ use App\Models\Proyecto;
 use App\Models\Resolucion;
 use App\Models\Ctacte;
 use App\Models\Programa;
+use App\Models\Impresion;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -232,8 +233,10 @@ class BeneficiarioController extends Controller
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                     ->first();
 
+                $impresion = Impresion::where('ci', $cedula)->latest()->first();
+
         //return $bamper;
-        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa'));
+        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa', 'impresion'));
     }
 
 
@@ -242,9 +245,16 @@ class BeneficiarioController extends Controller
     public function createPDF($PerCod)
     {
 
-        $beneficiario = Beneficiario::where('PerCod', $PerCod)
-        ->where('CliCMor','<=', 3)
-        ->where('PerCod', $PerCod)->first();
+
+
+        $impresion = new Impresion;
+        $impresion->ci=$PerCod;
+        $impresion->fecha_impresion = date('Y-m-d h:i:s');
+        $impresion->save();
+
+        $beneficiario = Beneficiario::where('PerCod', $PerCod)->first();
+        // ->where('CliCMor','<=', 3)
+        // ->where('PerCod', $PerCod)
         // ->orWhere('CliEsv', 9)
         // ->orWhere('CliEsv', 13)
         // ->orWhere('CliEsv', 23)->first();
@@ -274,6 +284,12 @@ class BeneficiarioController extends Controller
                                     ->select('CliFchCon')->first();
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                     ->first();
+
+
+
+
+
+
         $codigoQr = QrCode::size(150)->generate(env('APP_URL') . '/' . $PerCod);
         //$codigoQr = QrCode::size(150)->generate($bamper);
         $pdf = PDF::loadView('admin.beneficiario.pdf.constancia',
@@ -286,6 +302,7 @@ class BeneficiarioController extends Controller
                 'cuenta' => $cuenta,
                 'contrato' => $contrato,
                 'programa' => $programa,
+                'impresion' => $impresion,
                 'valor' => $codigoQr
 
             ]
