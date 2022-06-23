@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Impresion extends Model
+class Impresion extends Model implements Auditable
 {
     protected $fillable = [
         'ci',
@@ -13,12 +15,15 @@ class Impresion extends Model
 
     ];
 
+    protected $dates = [
+         'created_at',
+         'updated_at',
 
-    //  protected $dates = [
-    //      'created_at',
-    //      'updated_at',
+     ];
 
-    //  ];
+    use AuditableTrait;
+
+    protected $guarded = [];
 
     protected $appends = ['resource_url'];
 
