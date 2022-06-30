@@ -31,7 +31,7 @@
                     <li class="list-group-item">PROYECTO: {{ trim($proyecto->PylNom) }}</li>
                     <li class="list-group-item">MANZANA: {{ trim($cuenta->ManCod) }}</li>
                     <li class="list-group-item">LOTE: {{ trim($cuenta->VivLote) }}</li>
-                    <li class="list-group-item">CTA. CTE CTRAL: {{ trim($cuenta->VivCtaCte) }}</li>
+                    <li class="list-group-item">CTA. CTE CTRAL: {{ trim($cuenta->VivCtaVer) }}</li>
                     <li class="list-group-item">RESOLUCION: {{ trim($resolucion->CliNrs) }}</li>
                     <li class="list-group-item">FECHA RESOLUCION: {{ date('d/m/Y', strtotime(trim($resolucion->CliFRes)))}}</li>
                     <li class="list-group-item">ACTA: {{ $resolucion->CliNac ? trim($resolucion->CliNac): '' }}</li>
