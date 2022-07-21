@@ -7,11 +7,11 @@
     {{ $bamper->PerApeCas }}
 @else
  DE {{ $bamper->PerApeCas }}
-@endif</b> con <b>C.I. N°. {{ $beneficiario->PerCod }} </b>
+@endif</b>con <b>C.I. N°. {{ trim($beneficiario->PerCod) }}</b>
 @if (empty($conyuge))
 es
 @else
-y <b>Sr./Sra. {{ $nomconyuge->PerNomPri }} {{ $nomconyuge->PerNomSeg }} {{ $nomconyuge->PerApePri }} {{ $nomconyuge->PerApeSeg }} </b> con <b>C.I. N°. {{ $conyuge }} </b> son
+y <b>Sr./Sra. {{ $nomconyuge->PerNomPri }} {{ $nomconyuge->PerNomSeg }} {{ $nomconyuge->PerApePri }} {{ $nomconyuge->PerApeSeg }} </b>con <b>C.I. N°. {{ $conyuge }} </b> son
 @endif
  adjudicatario/a de la
  vivienda individualizada como manzana <b>{{ trim($cuenta->ManCod) }}</b>, <b>lote {{ trim($cuenta->VivLote) }}</b> del proyecto <b> {{ trim($proyecto->PylNom) }}</b>, con
@@ -26,4 +26,3 @@ y <b>Sr./Sra. {{ $nomconyuge->PerNomPri }} {{ $nomconyuge->PerNomSeg }} {{ $nomc
 <p style="text-align: justify;">Fecha de Impresión: {{ date('d/m/Y') }}</p>
 <img src="data:image/png;base64, {{ base64_encode($valor) }}" style="position: relative; left:550px;" alt="">
 <br><br><br><br><br><br><br><br><br><br>
-....certifica que el Sr./Sra. ....... con CI No. .....   ........
