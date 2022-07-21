@@ -11,7 +11,7 @@
     <title>MUVH - VALIDACION CONSTANCIA</title>
   </head>
   <body>
-      <div class="container">
+    <div class="container">
           <img src="{{url('img/logofull.jpg')}}" class="img-fluid mx-auto d-block" alt="Image"/>
         @if (isset($bamper))
         <div class="card">
@@ -26,8 +26,11 @@
                         @endif
                     </h5>
                     <h5 class="card-title text-center"> CEDULA: {{ $bamper->PerCod }}</h3>
-                    <h5 class="card-title text-center">CONYUGE: {{  $nomconyuge->PerNomPri  }} {{ $nomconyuge->PerNomSeg }} {{ $nomconyuge->PerApePri }} {{ $nomconyuge->PerApeSeg }}
-                    <h5 class="card-title text-center"> CEDULA: {{ $conyuge->SolPerCge }}</h3>
+                        @if (empty($conyuge1))
+                        @else
+                            <h5 class="card-title text-center">CONYUGE: {{  $nomconyuge->PerNomPri  }} {{ $nomconyuge->PerNomSeg }} {{ $nomconyuge->PerApePri }} {{ $nomconyuge->PerApeSeg }}
+                            <h5 class="card-title text-center"> CEDULA: {{trim($conyuge1)}}</h3>
+                        @endif
 
                     </h5>
 

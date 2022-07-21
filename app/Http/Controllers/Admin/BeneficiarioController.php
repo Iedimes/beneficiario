@@ -259,13 +259,15 @@ class BeneficiarioController extends Controller
                 $impresion = Impresion::where('ci', $cedula)->latest()->first();
 
                 $conyuge = Conyuge::where('SolPerCod', $cedula)
+                                    ->select('SolPerCge')
                                     ->first();
 
                 $nomconyuge = Bamper::where('PerCod', $conyuge['SolPerCge'])
                                     ->first();
+                $conyuge1 = trim($conyuge->SolPerCge);
 
         //return $bamper;
-        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa', 'impresion', 'conyuge', 'nomconyuge'));
+        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa', 'impresion', 'conyuge1', 'nomconyuge'));
     }
 
 
@@ -314,6 +316,7 @@ class BeneficiarioController extends Controller
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                     ->first();
                 $conyuge = Conyuge::where('SolPerCod', $PerCod)
+                                    ->select('SolPerCge')
                                     ->first();
                 $nomconyuge = Bamper::where('PerCod', $conyuge['SolPerCge'])
                                     ->first();
@@ -336,7 +339,7 @@ class BeneficiarioController extends Controller
                 'contrato' => $contrato,
                 'programa' => $programa,
                 'impresion' => $impresion,
-                'conyuge' => $conyuge,
+                'conyuge' => trim($conyuge->SolPerCge),
                 'nomconyuge' => $nomconyuge,
                 'valor' => $codigoQr
 
