@@ -15,6 +15,7 @@ use App\Models\Resolucion;
 use App\Models\Ctacte;
 use App\Models\Programa;
 use App\Models\Impresion;
+use App\Models\Conyuge;
 use Brackets\AdminListing\Facades\AdminListing;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -77,7 +78,7 @@ class BeneficiarioController extends Controller
                                   ->where('VivBlo', $beneficiario['VivBlo'])
                                   ->first();
 
-                $contrato =Resolucion::where('PerCod', $beneficiario['PerCod'])
+                $contrato = Resolucion::where('PerCod', $beneficiario['PerCod'])
                                     ->where('PylCod', $beneficiario['PylCod'])
                                     ->where('CliNop', $beneficiario['CliNop'])
                                     ->where('CliSec', $beneficiario['CliSec'])
@@ -86,6 +87,14 @@ class BeneficiarioController extends Controller
                                     ->select('CliFchCon')->first();
 
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
+                                    ->first();
+
+                                    $conyuge = Conyuge::where('SolPerCod', $PerCod)
+                                    ->select('SolPerCge')
+                                     ->first();
+
+                 $nomconyuge = Bamper::where('PerCod', $conyuge['SolPerCge'])
+                                    ->select('PerNom', 'PerCod')
                                     ->first();
 
                 return [
@@ -111,7 +120,9 @@ class BeneficiarioController extends Controller
                     // 'contrato' => '16/02/2010',
                     'programa' => trim($programa['PylTipDes']),
                     'estado' => $prmcli ? trim($prmcli['CliEsv']) : 'No tiene estado',
-                    'imprimir' => true
+                    'imprimir' => true,
+                    'conyuge' => $conyuge ? trim($conyuge['SolPerCge']) : 'No tiene conyuge',
+                    'nomconyuge' => $nomconyuge ? trim($nomconyuge['PerNom']) : 'Sin conyuge'
 
 
                 ];
@@ -157,6 +168,16 @@ class BeneficiarioController extends Controller
 
                  $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                      ->first();
+
+                 $conyuge = Conyuge::where('SolPerCod', $PerCod)
+                                    ->select('SolPerCge')
+                                     ->first();
+
+                 $nomconyuge = Bamper::where('PerCod', $conyuge['SolPerCge'])
+                                    ->select('PerNom', 'PerCod')
+                                    ->first();
+
+
                 return [
 
 
@@ -182,6 +203,8 @@ class BeneficiarioController extends Controller
                     'programa' => trim($programa['PylTipDes']),
                     'imprimir' => false,
                     'estado' => $prmcli ? trim($prmcli['CliEsv']) : 'No tiene estado',
+                    'conyuge' => $conyuge ? trim($conyuge['SolPerCge']) : 'No tiene conyuge',
+                    'nomconyuge' => $nomconyuge ? trim($nomconyuge['PerNom']) : 'Sin conyuge'
 
                 ];
             }
@@ -235,8 +258,14 @@ class BeneficiarioController extends Controller
 
                 $impresion = Impresion::where('ci', $cedula)->latest()->first();
 
+                $conyuge = Conyuge::where('SolPerCod', $cedula)
+                                    ->first();
+
+                $nomconyuge = Bamper::where('PerCod', $conyuge['SolPerCge'])
+                                    ->first();
+
         //return $bamper;
-        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa', 'impresion'));
+        return view('verification', compact('bamper', 'casada', 'proyecto', 'resolucion', 'cuenta', 'contrato', 'programa', 'impresion', 'conyuge', 'nomconyuge'));
     }
 
 
@@ -284,6 +313,10 @@ class BeneficiarioController extends Controller
                                     ->select('CliFchCon')->first();
                 $programa = Programa::where('PylTip', $proyecto['PylTip'])
                                     ->first();
+                $conyuge = Conyuge::where('SolPerCod', $PerCod)
+                                    ->first();
+                $nomconyuge = Bamper::where('PerCod', $conyuge['SolPerCge'])
+                                    ->first();
 
 
 
@@ -303,6 +336,8 @@ class BeneficiarioController extends Controller
                 'contrato' => $contrato,
                 'programa' => $programa,
                 'impresion' => $impresion,
+                'conyuge' => $conyuge,
+                'nomconyuge' => $nomconyuge,
                 'valor' => $codigoQr
 
             ]

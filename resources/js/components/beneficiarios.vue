@@ -30,11 +30,11 @@
 
             <div v-if="visible">
             <hr>
-            <h2 style="color: #4273FA; font-weight: bolder;">Beneficiario</h2><hr><br>
+            <h2 style="color: #4273FA; font-weight: bolder;">Beneficiarios</h2><hr><br>
            <div class="row">
 
                 <div class="form-group col-sm-3">
-                    <p class="card-text"><strong>NOMBRE:</strong> {{ this.Titular }}  </p>
+                    <p class="card-text"><strong>TITULAR:</strong> {{ this.Titular }}  </p>
                 </div>
                 <div class="form-group col-sm-3">
                     <p class="card-text"><strong>CEDULA:</strong> {{ this.Cedula }}  </p>
@@ -60,11 +60,21 @@
                 <div class="form-group col-sm-3" v-else-if="this.Imprimir==true">
                     <p style="color:red;"><strong>{{ this.Message }} -  </strong>  </p>
                 </div>
-
             </div>
+            <br>
+            <div class="row">
+                <div class="form-group col-sm-3">
+                    <p class="card-text"><strong>CONYUGE:</strong> {{ this.Nomconyuge }}  </p>
+                </div>
+                <div class="form-group col-sm-3">
+                    <p class="card-text"><strong>CEDULA:</strong> {{ this.Conyuge }}  </p>
+                </div>
+            </div>
+
             <hr>
             <h2 style="color: #4273FA; font-weight: bolder;">Información del proyecto</h2>
             <hr>
+            <br>
             <div class="row">
 
                 <div class="form-group col-sm-3">
@@ -170,7 +180,7 @@
 
 
             </div>
-            <br>
+
 
                 </div>
 
@@ -233,6 +243,8 @@ export default {
             Codigo:"",
             Estado:"",
             Imprimir:"",
+            Conyuge:"",
+            Nomconyuge:"",
             Message:"",
             error: "",
             infoBeneficiario: null,
@@ -296,6 +308,8 @@ export default {
                             me.Estado = respuesta.estado;
                             me.Message = respuesta.message;
                             me.Imprimir = respuesta.imprimir;
+                            me.Conyuge = respuesta.conyuge;
+                            me.Nomconyuge = respuesta.nomconyuge;
                             me.visible = true;
                             me.error = "";
 
@@ -331,6 +345,8 @@ export default {
             me.Estado = "";
             me.Imprimir = "";
             me.Message = "";
+            me.Conyuge = "";
+            me.Nomconyuge = "";
         },
         doAjax() {
             this.isLoading = true;

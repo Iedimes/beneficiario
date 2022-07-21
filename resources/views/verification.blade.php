@@ -15,19 +15,25 @@
           <img src="{{url('img/logofull.jpg')}}" class="img-fluid mx-auto d-block" alt="Image"/>
         @if (isset($bamper))
         <div class="card">
-        <h5 class="card-header text-center">CONSTANCIA BENEFICIARIO</h5>
+        <h5 class="card-header text-center">CONSTANCIA BENEFICIARIOS</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <h5 class="card-title text-center">BENEFICIARIO: {{  $bamper->PerNomPri  }} {{ $bamper->PerNomSeg }} {{ $bamper->PerApePri }} {{ $bamper->PerApeSeg }}
+                    <h5 class="card-title text-center">TITULAR: {{  $bamper->PerNomPri  }} {{ $bamper->PerNomSeg }} {{ $bamper->PerApePri }} {{ $bamper->PerApeSeg }}
                         @if (empty($casada))
                             {{ $bamper->PerApeCas }}
                         @else
                             DE {{ $bamper->PerApeCas }}
                         @endif
                     </h5>
+                    <h5 class="card-title text-center"> CEDULA: {{ $bamper->PerCod }}</h3>
+                    <h5 class="card-title text-center">CONYUGE: {{  $nomconyuge->PerNomPri  }} {{ $nomconyuge->PerNomSeg }} {{ $nomconyuge->PerApePri }} {{ $nomconyuge->PerApeSeg }}
+                    <h5 class="card-title text-center"> CEDULA: {{ $conyuge->SolPerCge }}</h3>
+
+                    </h5>
+
                 </div>
                 <ul class="list-group list-group-flush text-center">
-                    <li class="list-group-item">CEDULA: {{ $bamper->PerCod }}</li>
+                    <li class="list-group-item"></li>
                     <li class="list-group-item">PROYECTO: {{ trim($proyecto->PylNom) }}</li>
                     <li class="list-group-item">MANZANA: {{ trim($cuenta->ManCod) }}</li>
                     <li class="list-group-item">LOTE: {{ trim($cuenta->VivLote) }}</li>
