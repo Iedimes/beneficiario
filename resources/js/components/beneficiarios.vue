@@ -30,7 +30,10 @@
 
             <div v-if="visible">
             <hr>
-            <h2 style="color: #4273FA; font-weight: bolder;">Beneficiarios</h2><hr><br>
+            <div v-if="this.Conyuge!=''"><h2 style="color: #4273FA; font-weight: bolder;">Beneficiarios</h2><hr></div>
+            <div v-else><h2 style="color: #4273FA; font-weight: bolder;">Beneficiario</h2><hr></div>
+            <br>
+
            <div class="row">
 
                 <div class="form-group col-sm-3">
@@ -62,7 +65,7 @@
                 </div>
             </div>
             <br>
-            <div class="row">
+            <div class="row" v-if="this.Conyuge!=''">
                 <div class="form-group col-sm-3">
                     <p class="card-text"><strong>CONYUGE:</strong> {{ this.Nomconyuge }}  </p>
                 </div>
